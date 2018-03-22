@@ -2,7 +2,7 @@
   "extends" : "thirdParty.api",
   "abstract" : false,
   "root" : "https://tiny-gram.appspot.com/_ah/api",
-  "name" : "userendpoint",
+  "name" : "messageendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
@@ -27,14 +27,14 @@
   "ownerName" : "anasse.com",
   "packagePath" : "entity",
   "methods" : {
-    "userendpoint.updateUser" : {
-      "path" : "user",
-      "httpMethod" : "PUT",
+    "messageendpoint.insertMessage" : {
+      "path" : "message",
+      "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.UserEndpoint.updateUser",
+      "rosyMethod" : "com.anasse.entity.MessageEndpoint.insertMessage",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
@@ -43,14 +43,35 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "userendpoint.listUser" : {
-      "path" : "user",
+    "messageendpoint.removeMessage" : {
+      "path" : "message/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.anasse.entity.MessageEndpoint.removeMessage",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "messageendpoint.listMessage" : {
+      "path" : "message",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.UserEndpoint.listUser",
+      "rosyMethod" : "com.anasse.entity.MessageEndpoint.listMessage",
       "request" : {
         "parameters" : {
           "cursor" : {
@@ -68,59 +89,38 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "userendpoint.insertUser" : {
-      "path" : "user",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.UserEndpoint.insertUser",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "userendpoint.removeUser" : {
-      "path" : "user/{id}",
-      "httpMethod" : "DELETE",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.UserEndpoint.removeUser",
-      "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "empty"
-      }
-    },
-    "userendpoint.getUser" : {
-      "path" : "user/{id}",
+    "messageendpoint.getMessage" : {
+      "path" : "message/{id}",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.UserEndpoint.getUser",
+      "rosyMethod" : "com.anasse.entity.MessageEndpoint.getMessage",
       "request" : {
         "parameters" : {
           "id" : {
-            "type" : "string",
+            "type" : "int64",
             "required" : true
           }
         },
         "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "messageendpoint.updateMessage" : {
+      "path" : "message",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.anasse.entity.MessageEndpoint.updateMessage",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -129,41 +129,35 @@
   },
   "descriptor" : {
     "schemas" : {
-      "User" : {
-        "id" : "User",
+      "Message" : {
+        "id" : "Message",
         "type" : "object",
         "properties" : {
-          "userName" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "content" : {
             "type" : "string"
           },
-          "firstName" : {
-            "type" : "string"
-          },
-          "lastName" : {
-            "type" : "string"
-          },
-          "followings" : {
+          "hashtags" : {
             "type" : "array",
             "items" : {
               "type" : "string"
             }
           },
-          "followers" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
-            }
+          "userId" : {
+            "type" : "integer"
           }
         }
       },
-      "CollectionResponse_User" : {
-        "id" : "CollectionResponse_User",
+      "CollectionResponse_Message" : {
+        "id" : "CollectionResponse_Message",
         "type" : "object",
         "properties" : {
           "items" : {
             "type" : "array",
             "items" : {
-              "$ref" : "User"
+              "$ref" : "Message"
             }
           },
           "nextPageToken" : {
@@ -173,32 +167,32 @@
       }
     },
     "methods" : {
-      "com.anasse.entity.UserEndpoint.updateUser" : {
+      "com.anasse.entity.MessageEndpoint.insertMessage" : {
         "request" : {
-          "$ref" : "User"
+          "$ref" : "Message"
         },
         "response" : {
-          "$ref" : "User"
+          "$ref" : "Message"
         }
       },
-      "com.anasse.entity.UserEndpoint.listUser" : {
+      "com.anasse.entity.MessageEndpoint.removeMessage" : {
+      },
+      "com.anasse.entity.MessageEndpoint.listMessage" : {
         "response" : {
-          "$ref" : "CollectionResponse_User"
+          "$ref" : "CollectionResponse_Message"
         }
       },
-      "com.anasse.entity.UserEndpoint.insertUser" : {
+      "com.anasse.entity.MessageEndpoint.getMessage" : {
+        "response" : {
+          "$ref" : "Message"
+        }
+      },
+      "com.anasse.entity.MessageEndpoint.updateMessage" : {
         "request" : {
-          "$ref" : "User"
+          "$ref" : "Message"
         },
         "response" : {
-          "$ref" : "User"
-        }
-      },
-      "com.anasse.entity.UserEndpoint.removeUser" : {
-      },
-      "com.anasse.entity.UserEndpoint.getUser" : {
-        "response" : {
-          "$ref" : "User"
+          "$ref" : "Message"
         }
       }
     }
