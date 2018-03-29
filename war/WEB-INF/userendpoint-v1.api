@@ -27,22 +27,6 @@
   "ownerName" : "anasse.com",
   "packagePath" : "entity",
   "methods" : {
-    "userendpoint.updateUser" : {
-      "path" : "user",
-      "httpMethod" : "PUT",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.UserEndpoint.updateUser",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "userendpoint.listUser" : {
       "path" : "user",
       "httpMethod" : "GET",
@@ -84,6 +68,22 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
+    "userendpoint.updateUser" : {
+      "path" : "user",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.anasse.entity.UserEndpoint.updateUser",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "userendpoint.removeUser" : {
       "path" : "user/{id}",
       "httpMethod" : "DELETE",
@@ -95,7 +95,7 @@
       "request" : {
         "parameters" : {
           "id" : {
-            "type" : "string",
+            "type" : "int64",
             "required" : true
           }
         },
@@ -116,7 +116,7 @@
       "request" : {
         "parameters" : {
           "id" : {
-            "type" : "string",
+            "type" : "int64",
             "required" : true
           }
         },
@@ -129,33 +129,6 @@
   },
   "descriptor" : {
     "schemas" : {
-      "User" : {
-        "id" : "User",
-        "type" : "object",
-        "properties" : {
-          "userName" : {
-            "type" : "string"
-          },
-          "firstName" : {
-            "type" : "string"
-          },
-          "lastName" : {
-            "type" : "string"
-          },
-          "followings" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
-            }
-          },
-          "followers" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
-            }
-          }
-        }
-      },
       "CollectionResponse_User" : {
         "id" : "CollectionResponse_User",
         "type" : "object",
@@ -170,10 +143,45 @@
             "type" : "string"
           }
         }
+      },
+      "User" : {
+        "id" : "User",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "userName" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "followings" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer"
+            }
+          },
+          "followers" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer"
+            }
+          }
+        }
       }
     },
     "methods" : {
-      "com.anasse.entity.UserEndpoint.updateUser" : {
+      "com.anasse.entity.UserEndpoint.listUser" : {
+        "response" : {
+          "$ref" : "CollectionResponse_User"
+        }
+      },
+      "com.anasse.entity.UserEndpoint.insertUser" : {
         "request" : {
           "$ref" : "User"
         },
@@ -181,12 +189,7 @@
           "$ref" : "User"
         }
       },
-      "com.anasse.entity.UserEndpoint.listUser" : {
-        "response" : {
-          "$ref" : "CollectionResponse_User"
-        }
-      },
-      "com.anasse.entity.UserEndpoint.insertUser" : {
+      "com.anasse.entity.UserEndpoint.updateUser" : {
         "request" : {
           "$ref" : "User"
         },

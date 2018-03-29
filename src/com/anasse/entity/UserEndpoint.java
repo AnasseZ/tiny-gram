@@ -77,7 +77,7 @@ public class UserEndpoint {
 	 * @return The entity with primary key id.
 	 */
 	@ApiMethod(name = "getUser")
-	public User getUser(@Named("id") String id) {
+	public User getUser(@Named("id") Long id) {
 		PersistenceManager mgr = getPersistenceManager();
 		User user = null;
 		try {
@@ -139,7 +139,7 @@ public class UserEndpoint {
 	 * @param id the primary key of the entity to be deleted.
 	 */
 	@ApiMethod(name = "removeUser")
-	public void removeUser(@Named("id") String id) {
+	public void removeUser(@Named("id") Long id) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
 			User user = mgr.getObjectById(User.class, id);
@@ -153,7 +153,7 @@ public class UserEndpoint {
 		PersistenceManager mgr = getPersistenceManager();
 		boolean contains = true;
 		try {
-			mgr.getObjectById(User.class, user.getUserName());
+			mgr.getObjectById(User.class, user.getId());
 		} catch (javax.jdo.JDOObjectNotFoundException ex) {
 			contains = false;
 		} finally {

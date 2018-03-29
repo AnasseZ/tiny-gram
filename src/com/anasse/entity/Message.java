@@ -1,5 +1,7 @@
 package com.anasse.entity;
 
+import java.util.ArrayList;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -18,10 +20,13 @@ public class Message {
 	private String content;
 	
 	@Persistent
-	private String[] hashtags; 
+	private ArrayList<String> hashtags; 
 	
 	@Persistent
 	private int userId;
+	
+	@Persistent
+	private String imageUrl;
 
 	public int getId() {
 		return id;
@@ -39,19 +44,27 @@ public class Message {
 		this.content = content;
 	}
 
-	public String[] getHashtags() {
-		return hashtags;
-	}
-
-	public void setHashtags(String[] hashtags) {
-		this.hashtags = hashtags;
-	}
-
 	public int getUserId() {
 		return userId;
 	}
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public ArrayList<String> getHashtags() {
+		return hashtags;
+	}
+
+	public void setHashtags(ArrayList<String> hashtags) {
+		this.hashtags = hashtags;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 }

@@ -13,6 +13,9 @@ public class User {
 
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
+	private int id;
+	
+	@Persistent
 	private String userName;
 	
 	@Persistent
@@ -22,10 +25,10 @@ public class User {
 	private String lastName;
 	
 	@Persistent
-	private ArrayList<String> followings;
+	private ArrayList<Integer> followings;
 	
 	@Persistent
-	private ArrayList<String> followers;
+	private ArrayList<Integer> followers;
 
 	public String getUserName() {
 		return userName;
@@ -51,22 +54,27 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public ArrayList<String> getFollowings() {
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public ArrayList<Integer> getFollowings() {
 		return followings;
 	}
 
-	public void setFollowings(ArrayList<String> followings) {
+	public void setFollowings(ArrayList<Integer> followings) {
 		this.followings = followings;
 	}
 
-	public ArrayList<String> getFollowers() {
+	public ArrayList<Integer> getFollowers() {
 		return followers;
 	}
 
-	public void setFollowers(ArrayList<String> followers) {
+	public void setFollowers(ArrayList<Integer> followers) {
 		this.followers = followers;
 	}
-	
-	
-	
 }
