@@ -77,7 +77,7 @@ public class MessageEndpoint {
 	 * @return The entity with primary key id.
 	 */
 	@ApiMethod(name = "getMessage")
-	public Message getMessage(@Named("id") Long id) {
+	public Message getMessage(@Named("id") String id) {
 		PersistenceManager mgr = getPersistenceManager();
 		Message message = null;
 		try {
@@ -139,7 +139,7 @@ public class MessageEndpoint {
 	 * @param id the primary key of the entity to be deleted.
 	 */
 	@ApiMethod(name = "removeMessage")
-	public void removeMessage(@Named("id") Long id) {
+	public void removeMessage(@Named("id") String id) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
 			Message message = mgr.getObjectById(Message.class, id);
@@ -153,7 +153,7 @@ public class MessageEndpoint {
 		PersistenceManager mgr = getPersistenceManager();
 		boolean contains = true;
 		try {
-			mgr.getObjectById(Message.class, message.getId());
+			mgr.getObjectById(Message.class, message.getPostId());
 		} catch (javax.jdo.JDOObjectNotFoundException ex) {
 			contains = false;
 		} finally {

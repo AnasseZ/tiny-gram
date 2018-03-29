@@ -12,7 +12,7 @@ import javax.jdo.annotations.PrimaryKey;
 public class User {
 
 	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
+	@Persistent
 	private int id;
 	
 	@Persistent
