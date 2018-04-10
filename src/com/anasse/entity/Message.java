@@ -1,6 +1,7 @@
 package com.anasse.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -22,10 +23,13 @@ public class Message {
 	private ArrayList<String> hashtags; 
 	
 	@Persistent
-	private int userId;
+	private String userId;
 	
 	@Persistent
 	private String imageUrl;
+	
+	@Persistent
+	private Date publicationDate;
 
 	public String getContent() {
 		return content;
@@ -35,11 +39,11 @@ public class Message {
 		this.content = content;
 	}
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
@@ -65,5 +69,13 @@ public class Message {
 
 	public void setPostId(String postId) {
 		this.postId = postId;
+	}
+
+	public Date getPublicationDate() {
+		return publicationDate;
+	}
+
+	public void setPublicationDate(Date publicationDate) {
+		this.publicationDate = publicationDate;
 	}
 }

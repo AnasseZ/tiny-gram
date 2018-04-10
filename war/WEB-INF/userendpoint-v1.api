@@ -27,24 +27,8 @@
   "ownerName" : "anasse.com",
   "packagePath" : "entity",
   "methods" : {
-    "userendpoint.insertUser" : {
-      "path" : "user",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.UserEndpoint.insertUser",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "userendpoint.updateUser" : {
-      "path" : "user",
+      "path" : "update-user",
       "httpMethod" : "PUT",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -105,8 +89,24 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
+    "userendpoint.insertUser" : {
+      "path" : "create-user",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.anasse.entity.UserEndpoint.insertUser",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "userendpoint.getUser" : {
-      "path" : "user/{id}",
+      "path" : "findUser",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -176,14 +176,6 @@
       }
     },
     "methods" : {
-      "com.anasse.entity.UserEndpoint.insertUser" : {
-        "request" : {
-          "$ref" : "User"
-        },
-        "response" : {
-          "$ref" : "User"
-        }
-      },
       "com.anasse.entity.UserEndpoint.updateUser" : {
         "request" : {
           "$ref" : "User"
@@ -197,6 +189,14 @@
       "com.anasse.entity.UserEndpoint.listUser" : {
         "response" : {
           "$ref" : "CollectionResponse_User"
+        }
+      },
+      "com.anasse.entity.UserEndpoint.insertUser" : {
+        "request" : {
+          "$ref" : "User"
+        },
+        "response" : {
+          "$ref" : "User"
         }
       },
       "com.anasse.entity.UserEndpoint.getUser" : {

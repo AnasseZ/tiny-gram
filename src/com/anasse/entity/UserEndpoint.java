@@ -76,7 +76,7 @@ public class UserEndpoint {
 	 * @param id the primary key of the java bean.
 	 * @return The entity with primary key id.
 	 */
-	@ApiMethod(name = "getUser")
+	@ApiMethod(name = "getUser", path="findUser")
 	public User getUser(@Named("id") Long id) {
 		PersistenceManager mgr = getPersistenceManager();
 		User user = null;
@@ -96,7 +96,7 @@ public class UserEndpoint {
 	 * @param user the entity to be inserted.
 	 * @return The inserted entity.
 	 */
-	@ApiMethod(name = "insertUser")
+	@ApiMethod(name = "insertUser", path="create-user")
 	public User insertUser(User user) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
@@ -118,7 +118,7 @@ public class UserEndpoint {
 	 * @param user the entity to be updated.
 	 * @return The updated entity.
 	 */
-	@ApiMethod(name = "updateUser")
+	@ApiMethod(name = "updateUser", path="update-user")
 	public User updateUser(User user) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {

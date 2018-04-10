@@ -33,7 +33,8 @@ public class MessageEndpoint {
 	@ApiMethod(name = "listMessage", path="timeline")
 	public CollectionResponse<Message> listMessage(
 			@Nullable @Named("cursor") String cursorString,
-			@Nullable @Named("limit") Integer limit) {
+			@Nullable @Named("limit") Integer limit,
+			@Nullable @Named ("userId") String userId) {
 
 		PersistenceManager mgr = null;
 		Cursor cursor = null;
@@ -96,7 +97,7 @@ public class MessageEndpoint {
 	 * @param message the entity to be inserted.
 	 * @return The inserted entity.
 	 */
-	@ApiMethod(name = "insertMessage")
+	@ApiMethod(name = "insertMessage", path="create-message")
 	public Message insertMessage(Message message) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {

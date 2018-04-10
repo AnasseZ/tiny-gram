@@ -2,7 +2,6 @@ package com.anasse.entity;
 
 import java.util.ArrayList;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -29,6 +28,9 @@ public class User {
 	
 	@Persistent
 	private ArrayList<Integer> followers;
+	
+	@Persistent
+	private String avatar;
 
 	public String getUserName() {
 		return userName;
@@ -76,5 +78,13 @@ public class User {
 
 	public void setFollowers(ArrayList<Integer> followers) {
 		this.followers = followers;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 }
