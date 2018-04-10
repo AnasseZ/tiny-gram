@@ -27,24 +27,8 @@
   "ownerName" : "anasse.com",
   "packagePath" : "entity",
   "methods" : {
-    "messageendpoint.insertMessage" : {
-      "path" : "message",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.MessageEndpoint.insertMessage",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "messageendpoint.listMessage" : {
-      "path" : "message",
+      "path" : "timeline",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -63,6 +47,22 @@
           }
         },
         "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "messageendpoint.insertMessage" : {
+      "path" : "message",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.anasse.entity.MessageEndpoint.insertMessage",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -129,6 +129,21 @@
   },
   "descriptor" : {
     "schemas" : {
+      "CollectionResponse_Message" : {
+        "id" : "CollectionResponse_Message",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Message"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      },
       "Message" : {
         "id" : "Message",
         "type" : "object",
@@ -152,35 +167,20 @@
             "type" : "string"
           }
         }
-      },
-      "CollectionResponse_Message" : {
-        "id" : "CollectionResponse_Message",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "Message"
-            }
-          },
-          "nextPageToken" : {
-            "type" : "string"
-          }
-        }
       }
     },
     "methods" : {
+      "com.anasse.entity.MessageEndpoint.listMessage" : {
+        "response" : {
+          "$ref" : "CollectionResponse_Message"
+        }
+      },
       "com.anasse.entity.MessageEndpoint.insertMessage" : {
         "request" : {
           "$ref" : "Message"
         },
         "response" : {
           "$ref" : "Message"
-        }
-      },
-      "com.anasse.entity.MessageEndpoint.listMessage" : {
-        "response" : {
-          "$ref" : "CollectionResponse_Message"
         }
       },
       "com.anasse.entity.MessageEndpoint.removeMessage" : {

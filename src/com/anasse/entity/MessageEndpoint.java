@@ -30,7 +30,7 @@ public class MessageEndpoint {
 	 * persisted and a cursor to the next page.
 	 */
 	@SuppressWarnings({ "unchecked", "unused" })
-	@ApiMethod(name = "listMessage")
+	@ApiMethod(name = "listMessage", path="timeline")
 	public CollectionResponse<Message> listMessage(
 			@Nullable @Named("cursor") String cursorString,
 			@Nullable @Named("limit") Integer limit) {
