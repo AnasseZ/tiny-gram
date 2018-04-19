@@ -6,12 +6,16 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.NotFoundException;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Named;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -111,17 +115,29 @@ public class MessageEndpoint {
 	 * @return The inserted entity.
 	 */
 	@ApiMethod(name = "insertMessage", path="create-message")
-	public Message insertMessage(Message message) {
-		PersistenceManager mgr = getPersistenceManager();
-		try {
-			if (containsMessage(message)) {
-				throw new EntityExistsException("Object already exists");
-			}
-			mgr.makePersistent(message);
-		} finally {
-			mgr.close();
-		}
-		return message;
+	public Entity insertMessage(IncompleteMessage incompleteMessage) {
+		
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		
+		Random r = new Random();
+		int indexRandom = r.nextInt(60000-6000) +1;
+		Entity e = new Entity("Message", "m" + indexRandom);
+
+		e.setProperty("userId", incompleteMessage.userId);
+		e.setProperty("content", incompleteMessage.content);
+		e.setProperty("imageUrl", incompleteMessage.imageUrl);
+		e.setProperty("hashtags", incompleteMessage.hashtags);
+		e.setProperty("publicationDate", new Date());
+
+		datastore.put(e);
+		
+		indexRandom = r.nextInt(60000-6000) +1;
+		Entity messageIndex = new Entity("MessageIndex", "i" + indexRandom, e.getKey());
+		messageIndex.setProperty("followers", incompleteMessage.followers);
+		
+		datastore.put(messageIndex);
+		
+		return e;
 	}
 
 	/**

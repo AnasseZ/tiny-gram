@@ -206,6 +206,64 @@
           }
         }
       },
+      "IncompleteMessage" : {
+        "id" : "IncompleteMessage",
+        "type" : "object",
+        "properties" : {
+          "imageUrl" : {
+            "type" : "string"
+          },
+          "content" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "string"
+          },
+          "hashtags" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "followers" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "Entity" : {
+        "id" : "Entity",
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "$ref" : "Key"
+          },
+          "parent" : {
+            "$ref" : "Key"
+          },
+          "kind" : {
+            "type" : "string"
+          },
+          "propertiesFrom" : {
+            "$ref" : "Entity"
+          },
+          "appId" : {
+            "type" : "string"
+          },
+          "namespace" : {
+            "type" : "string"
+          },
+          "properties" : {
+            "$ref" : "JsonMap"
+          }
+        }
+      },
+      "JsonMap" : {
+        "id" : "JsonMap",
+        "type" : "object"
+      },
       "MessageCollection" : {
         "id" : "MessageCollection",
         "type" : "object",
@@ -229,10 +287,10 @@
       },
       "com.anasse.entity.MessageEndpoint.insertMessage" : {
         "request" : {
-          "$ref" : "Message"
+          "$ref" : "IncompleteMessage"
         },
         "response" : {
-          "$ref" : "Message"
+          "$ref" : "Entity"
         }
       },
       "com.anasse.entity.MessageEndpoint.updateMessage" : {
