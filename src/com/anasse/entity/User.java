@@ -12,7 +12,7 @@ public class User {
 
 	@PrimaryKey
 	@Persistent
-	private int id;
+	private String id;
 	
 	@Persistent
 	private String userName;
@@ -24,10 +24,7 @@ public class User {
 	private String lastName;
 	
 	@Persistent
-	private ArrayList<Integer> followings;
-	
-	@Persistent
-	private ArrayList<Integer> followers;
+	private ArrayList<String> followers;
 	
 	@Persistent
 	private String avatar;
@@ -56,27 +53,19 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public ArrayList<Integer> getFollowings() {
-		return followings;
-	}
-
-	public void setFollowings(ArrayList<Integer> followings) {
-		this.followings = followings;
-	}
-
-	public ArrayList<Integer> getFollowers() {
+	public ArrayList<String> getFollowers() {
 		return followers;
 	}
 
-	public void setFollowers(ArrayList<Integer> followers) {
+	public void setFollowers(ArrayList<String> followers) {
 		this.followers = followers;
 	}
 

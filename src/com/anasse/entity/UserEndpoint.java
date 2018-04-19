@@ -7,6 +7,8 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 
 import java.util.HashMap;
@@ -76,16 +78,24 @@ public class UserEndpoint {
 	 * @param id the primary key of the java bean.
 	 * @return The entity with primary key id.
 	 */
-	@ApiMethod(name = "getUser", path="findUser")
-	public User getUser(@Named("id") Long id) {
-		PersistenceManager mgr = getPersistenceManager();
-		User user = null;
-		try {
-			user = mgr.getObjectById(User.class, id);
-		} finally {
-			mgr.close();
+	@SuppressWarnings({ "unchecked" })
+	@ApiMethod(name = "getUser", path="findUser/{userId}/")
+	public User getUserById(@Named("userId") String user) {
+		
+		PersistenceManager pm = getPersistenceManager();
+		
+		Query query = pm.newQuery(User.class);
+		Key userKey = KeyFactory.createKey(User.class.getSimpleName(), user);
+		
+		query.setFilter("id == userKey");
+		query.declareParameters("String userKey");
+		
+		List<User> l = (List<User>) query.execute(userKey);
+		if(l.size()>0) {
+			return l.get(0);
 		}
-		return user;
+		
+		return null;
 	}
 
 	/**

@@ -7,6 +7,14 @@
 		<servlet-name>Tiny_gram</servlet-name>
 		<url-pattern>/tiny_gram</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>PopulateUsersServlet</servlet-name>
+		<servlet-class>com.anasse.tinygram.PopulateUsersServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PopulateUsersServlet</servlet-name>
+		<url-pattern>/fill-users</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

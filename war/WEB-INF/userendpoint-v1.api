@@ -27,6 +27,31 @@
   "ownerName" : "anasse.com",
   "packagePath" : "entity",
   "methods" : {
+    "userendpoint.listUser" : {
+      "path" : "user",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.anasse.entity.UserEndpoint.listUser",
+      "request" : {
+        "parameters" : {
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "userendpoint.updateUser" : {
       "path" : "update-user",
       "httpMethod" : "PUT",
@@ -64,31 +89,6 @@
         "body" : "empty"
       }
     },
-    "userendpoint.listUser" : {
-      "path" : "user",
-      "httpMethod" : "GET",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.UserEndpoint.listUser",
-      "request" : {
-        "parameters" : {
-          "cursor" : {
-            "type" : "string",
-            "required" : false
-          },
-          "limit" : {
-            "type" : "int32",
-            "required" : false
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "userendpoint.insertUser" : {
       "path" : "create-user",
       "httpMethod" : "POST",
@@ -106,17 +106,17 @@
       }
     },
     "userendpoint.getUser" : {
-      "path" : "findUser",
+      "path" : "findUser/{userId}/",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.UserEndpoint.getUser",
+      "rosyMethod" : "com.anasse.entity.UserEndpoint.getUserById",
       "request" : {
         "parameters" : {
-          "id" : {
-            "type" : "int64",
+          "userId" : {
+            "type" : "string",
             "required" : true
           }
         },
@@ -129,36 +129,6 @@
   },
   "descriptor" : {
     "schemas" : {
-      "User" : {
-        "id" : "User",
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
-          "userName" : {
-            "type" : "string"
-          },
-          "firstName" : {
-            "type" : "string"
-          },
-          "lastName" : {
-            "type" : "string"
-          },
-          "followings" : {
-            "type" : "array",
-            "items" : {
-              "type" : "integer"
-            }
-          },
-          "followers" : {
-            "type" : "array",
-            "items" : {
-              "type" : "integer"
-            }
-          }
-        }
-      },
       "CollectionResponse_User" : {
         "id" : "CollectionResponse_User",
         "type" : "object",
@@ -173,9 +143,41 @@
             "type" : "string"
           }
         }
+      },
+      "User" : {
+        "id" : "User",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "userName" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "followers" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "avatar" : {
+            "type" : "string"
+          }
+        }
       }
     },
     "methods" : {
+      "com.anasse.entity.UserEndpoint.listUser" : {
+        "response" : {
+          "$ref" : "CollectionResponse_User"
+        }
+      },
       "com.anasse.entity.UserEndpoint.updateUser" : {
         "request" : {
           "$ref" : "User"
@@ -186,11 +188,6 @@
       },
       "com.anasse.entity.UserEndpoint.removeUser" : {
       },
-      "com.anasse.entity.UserEndpoint.listUser" : {
-        "response" : {
-          "$ref" : "CollectionResponse_User"
-        }
-      },
       "com.anasse.entity.UserEndpoint.insertUser" : {
         "request" : {
           "$ref" : "User"
@@ -199,7 +196,7 @@
           "$ref" : "User"
         }
       },
-      "com.anasse.entity.UserEndpoint.getUser" : {
+      "com.anasse.entity.UserEndpoint.getUserById" : {
         "response" : {
           "$ref" : "User"
         }

@@ -8,13 +8,14 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(identityType=IdentityType.APPLICATION)
 public class Message {
 
 	@PrimaryKey
 	@Persistent
-	private String postId;
+	private Key postId;
 	
 	@Persistent
 	private String content;
@@ -30,6 +31,8 @@ public class Message {
 	
 	@Persistent
 	private Date publicationDate;
+	
+	private IncompleteUser user;
 
 	public String getContent() {
 		return content;
@@ -63,11 +66,11 @@ public class Message {
 		this.imageUrl = imageUrl;
 	}
 
-	public String getPostId() {
+	public Key getPostId() {
 		return postId;
 	}
 
-	public void setPostId(String postId) {
+	public void setPostId(Key postId) {
 		this.postId = postId;
 	}
 
@@ -77,5 +80,13 @@ public class Message {
 
 	public void setPublicationDate(Date publicationDate) {
 		this.publicationDate = publicationDate;
+	}
+
+	public IncompleteUser getUser() {
+		return user;
+	}
+
+	public void setUser(IncompleteUser user) {
+		this.user = user;
 	}
 }

@@ -2,26 +2,37 @@ package com.anasse.entity;
 
 import java.util.ArrayList;
 
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+
+import com.google.appengine.api.datastore.Key;
+
+@PersistenceCapable(identityType=IdentityType.APPLICATION)
 public class MessageIndex {
 	
-	private String id;
+	@PrimaryKey
+	@Persistent
+	private Key id;
 	
-	private ArrayList<String> followersId;
+	@Persistent
+	private ArrayList<String> followers;
 
-	public String getId() {
+	public Key getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Key id) {
 		this.id = id;
 	}
 
-	public ArrayList<String> getFollowersId() {
-		return followersId;
+	public ArrayList<String> getFollowers() {
+		return followers;
 	}
 
-	public void setFollowersId(ArrayList<String> followersId) {
-		this.followersId = followersId;
+	public void setFollowers(ArrayList<String> followers) {
+		this.followers = followers;
 	}
 
 }

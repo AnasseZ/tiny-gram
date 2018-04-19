@@ -27,43 +27,19 @@
   "ownerName" : "anasse.com",
   "packagePath" : "entity",
   "methods" : {
-    "messageendpoint.insertMessage" : {
-      "path" : "create-message",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.MessageEndpoint.insertMessage",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "messageendpoint.listMessage" : {
-      "path" : "timeline",
+    "messageendpoint.getMessage" : {
+      "path" : "message/{id}",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.MessageEndpoint.listMessage",
+      "rosyMethod" : "com.anasse.entity.MessageEndpoint.getMessage",
       "request" : {
         "parameters" : {
-          "cursor" : {
+          "id" : {
             "type" : "string",
-            "required" : false
-          },
-          "limit" : {
-            "type" : "int32",
-            "required" : false
-          },
-          "userId" : {
-            "type" : "string",
-            "required" : false
+            "required" : true
           }
         },
         "body" : "empty"
@@ -93,22 +69,17 @@
         "body" : "empty"
       }
     },
-    "messageendpoint.getMessage" : {
-      "path" : "message/{id}",
-      "httpMethod" : "GET",
+    "messageendpoint.insertMessage" : {
+      "path" : "create-message",
+      "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.MessageEndpoint.getMessage",
+      "rosyMethod" : "com.anasse.entity.MessageEndpoint.insertMessage",
       "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -129,6 +100,31 @@
       "response" : {
         "body" : "autoTemplate(backendResponse)"
       }
+    },
+    "messageendpoint.getTimeline" : {
+      "path" : "{user}/get-timeline/{limit}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.anasse.entity.MessageEndpoint.getTimeLine",
+      "request" : {
+        "parameters" : {
+          "user" : {
+            "type" : "string",
+            "required" : true
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
     }
   },
   "descriptor" : {
@@ -138,7 +134,7 @@
         "type" : "object",
         "properties" : {
           "postId" : {
-            "type" : "string"
+            "$ref" : "Key"
           },
           "content" : {
             "type" : "string"
@@ -158,11 +154,60 @@
           "publicationDate" : {
             "type" : "string",
             "format" : "date-time"
+          },
+          "user" : {
+            "$ref" : "IncompleteUser"
           }
         }
       },
-      "CollectionResponse_Message" : {
-        "id" : "CollectionResponse_Message",
+      "Key" : {
+        "id" : "Key",
+        "type" : "object",
+        "properties" : {
+          "kind" : {
+            "type" : "string"
+          },
+          "appId" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "parent" : {
+            "$ref" : "Key"
+          },
+          "namespace" : {
+            "type" : "string"
+          },
+          "complete" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "IncompleteUser" : {
+        "id" : "IncompleteUser",
+        "type" : "object",
+        "properties" : {
+          "userName" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "avatar" : {
+            "type" : "string"
+          }
+        }
+      },
+      "MessageCollection" : {
+        "id" : "MessageCollection",
         "type" : "object",
         "properties" : {
           "items" : {
@@ -170,30 +215,22 @@
             "items" : {
               "$ref" : "Message"
             }
-          },
-          "nextPageToken" : {
-            "type" : "string"
           }
         }
       }
     },
     "methods" : {
-      "com.anasse.entity.MessageEndpoint.insertMessage" : {
-        "request" : {
-          "$ref" : "Message"
-        },
+      "com.anasse.entity.MessageEndpoint.getMessage" : {
         "response" : {
           "$ref" : "Message"
-        }
-      },
-      "com.anasse.entity.MessageEndpoint.listMessage" : {
-        "response" : {
-          "$ref" : "CollectionResponse_Message"
         }
       },
       "com.anasse.entity.MessageEndpoint.removeMessage" : {
       },
-      "com.anasse.entity.MessageEndpoint.getMessage" : {
+      "com.anasse.entity.MessageEndpoint.insertMessage" : {
+        "request" : {
+          "$ref" : "Message"
+        },
         "response" : {
           "$ref" : "Message"
         }
@@ -204,6 +241,11 @@
         },
         "response" : {
           "$ref" : "Message"
+        }
+      },
+      "com.anasse.entity.MessageEndpoint.getTimeLine" : {
+        "response" : {
+          "$ref" : "MessageCollection"
         }
       }
     }
