@@ -85,6 +85,31 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
+    "messageendpoint.getMessagesByHashtags" : {
+      "path" : "get-messages/{hashtag}/{limit}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.anasse.entity.MessageEndpoint.getMessagesByHashtags",
+      "request" : {
+        "parameters" : {
+          "hashtag" : {
+            "type" : "string",
+            "required" : true
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "messageendpoint.updateMessage" : {
       "path" : "message",
       "httpMethod" : "PUT",
@@ -291,6 +316,11 @@
         },
         "response" : {
           "$ref" : "Entity"
+        }
+      },
+      "com.anasse.entity.MessageEndpoint.getMessagesByHashtags" : {
+        "response" : {
+          "$ref" : "MessageCollection"
         }
       },
       "com.anasse.entity.MessageEndpoint.updateMessage" : {

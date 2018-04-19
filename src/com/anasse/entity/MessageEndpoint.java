@@ -139,6 +139,48 @@ public class MessageEndpoint {
 		
 		return e;
 	}
+	
+	@SuppressWarnings({ "unchecked", "unused" })
+	@ApiMethod(name="getMessagesByHashtags", path="get-messages/{hashtag}/{limit}")
+	public List<Message> getMessagesByHashtags(
+			@Named("hashtag") String hashtag,
+			@Named("limit") Integer limit
+			) throws NotFoundException
+	{
+		PersistenceManager mgr = null;
+		List<Message> queryResult;
+
+		try {
+			mgr = getPersistenceManager();
+	
+			Query query = mgr.newQuery(Message.class);
+			
+			query.setFilter("hashtags == hashtag");
+
+			query.declareParameters("String hashtag");
+
+			if (limit != null) {
+				query.setRange(0, limit);
+			} else {
+				query.setRange(0, 10);
+			}	
+			
+			 queryResult = (List<Message>) query.execute(hashtag);
+
+			// Tight loop for fetching all entities from datastore and accomodate
+			// for lazy fetch.
+			for (Message obj : queryResult)
+				;
+				
+		} finally {
+			//mgr.close();
+		}
+		
+		return queryResult;
+	}
+
+	
+	
 
 	/**
 	 * This method is used for updating an existing entity. If the entity does not
