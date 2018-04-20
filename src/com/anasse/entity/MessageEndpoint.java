@@ -140,7 +140,7 @@ public class MessageEndpoint {
 		return e;
 	}
 	
-	@SuppressWarnings({ "unchecked", "unused" })
+	@SuppressWarnings({ "unchecked"})
 	@ApiMethod(name="getMessagesByHashtags", path="get-messages/{hashtag}/{limit}")
 	public List<Message> getMessagesByHashtags(
 			@Named("hashtag") String hashtag,
@@ -155,6 +155,7 @@ public class MessageEndpoint {
 	
 			Query query = mgr.newQuery(Message.class);
 			
+			hashtag = "#" + hashtag;
 			query.setFilter("hashtags == hashtag");
 
 			query.declareParameters("String hashtag");
@@ -169,8 +170,17 @@ public class MessageEndpoint {
 
 			// Tight loop for fetching all entities from datastore and accomodate
 			// for lazy fetch.
-			for (Message obj : queryResult)
-				;
+			 for(Message m : queryResult) {
+					User userWhoPosted = mgr.getObjectById(User.class, m.getUserId());
+				
+					IncompleteUser temp = new IncompleteUser();
+					temp.setAvatar(userWhoPosted.getAvatar());
+					temp.setFirstName(userWhoPosted.getFirstName());
+					temp.setLastName(userWhoPosted.getLastName());
+					temp.setUserName(userWhoPosted.getUserName());
+					
+					m.setUser(temp);
+				}
 				
 		} finally {
 			//mgr.close();
@@ -178,8 +188,55 @@ public class MessageEndpoint {
 		
 		return queryResult;
 	}
-
 	
+	@SuppressWarnings({ "unchecked"})
+	@ApiMethod(name="getMessagesByUsername", path="get-messages-by/{username}/{limit}")
+	public List<Message> getMessagesByUsername(
+			@Named("username") String username,
+			@Named("limit") Integer limit
+			) throws NotFoundException
+	{
+		PersistenceManager mgr = null;
+		List<Message> queryResult;
+
+		try {
+			mgr = getPersistenceManager();
+	
+			Query query = mgr.newQuery(User.class);
+			query.setFilter("userName == username");
+			query.declareParameters("String username");
+			query.setRange(0, 1);
+			
+			List<User> usersFound = (List<User>) query.execute(username);
+			User userFound = usersFound.get(0);
+			
+			Query messageQuery = mgr.newQuery(Message.class);
+			
+			String userFoundId = userFound.getId();
+			messageQuery.setFilter("userId == userFoundId");
+			messageQuery.declareParameters("String userFoundId");
+			messageQuery.setRange(0, limit);
+
+			queryResult = (List<Message>) messageQuery.execute(userFoundId);
+
+			// Tight loop for fetching all entities from datastore and accomodate
+			// for lazy fetch.
+			 for(Message m : queryResult) {
+					IncompleteUser temp = new IncompleteUser();
+					temp.setAvatar(userFound.getAvatar());
+					temp.setFirstName(userFound.getFirstName());
+					temp.setLastName(userFound.getLastName());
+					temp.setUserName(userFound.getUserName());
+					
+					m.setUser(temp);
+				}
+				
+		} finally {
+			//mgr.close();
+		}
+		
+		return queryResult;
+	}	
 	
 
 	/**

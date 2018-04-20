@@ -97,6 +97,35 @@ public class UserEndpoint {
 		
 		return null;
 	}
+	
+	@SuppressWarnings({ "unchecked" })
+	@ApiMethod(name = "getUser", path="find-by-username/{userName}/")
+	public User getUserByUsername(@Named("userName") String userName) {
+		
+		PersistenceManager pm = getPersistenceManager();
+		
+		Query query = pm.newQuery(User.class);
+		query.setFilter("userName == userName");
+		query.declareParameters("String userName");
+		
+		List<User> l = (List<User>) query.execute(userName);
+		if(l.size()>0) {
+			return l.get(0);
+		}
+		
+		return null;
+	}
+	
+	
+	@ApiMethod(name = "followUser", path="follow-user/{userId}")
+	public User followUser(User user, @Named("userId") String userId) {
+		PersistenceManager pm = getPersistenceManager();
+		user.getFollowers().add(userId);
+		pm.makePersistent(user);
+		
+		return user;
+	}
+	
 
 	/**
 	 * This inserts a new entity into App Engine datastore. If the entity already
