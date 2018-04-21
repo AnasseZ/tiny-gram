@@ -70,6 +70,8 @@ public class MessageEndpoint {
 				temp.setFirstName(userWhoPosted.getFirstName());
 				temp.setLastName(userWhoPosted.getLastName());
 				temp.setUserName(userWhoPosted.getUserName());
+				temp.setId(userWhoPosted.getId());
+
 				
 				m.setUser(temp);
 								
@@ -178,6 +180,7 @@ public class MessageEndpoint {
 					temp.setFirstName(userWhoPosted.getFirstName());
 					temp.setLastName(userWhoPosted.getLastName());
 					temp.setUserName(userWhoPosted.getUserName());
+					temp.setId(userWhoPosted.getId());
 					
 					m.setUser(temp);
 				}
@@ -192,7 +195,7 @@ public class MessageEndpoint {
 	@SuppressWarnings({ "unchecked"})
 	@ApiMethod(name="getMessagesById", path="get-messages-by/{userId}/{limit}")
 	public List<Message> getMessagesById(
-			@Named("userId") String userId,
+			@Named("userId") String idUser,
 			@Named("limit") Integer limit
 			) throws NotFoundException
 	{
@@ -203,20 +206,20 @@ public class MessageEndpoint {
 			mgr = getPersistenceManager();
 	
 			Query query = mgr.newQuery(User.class);
-			query.setFilter("id == userId");
-			query.declareParameters("String userId");
+			query.setFilter("id == idUser");
+			query.declareParameters("String idUser");
 			query.setRange(0, 1);
 			
-			List<User> usersFound = (List<User>) query.execute(userId);
+			List<User> usersFound = (List<User>) query.execute(idUser);
 			User userFound = usersFound.get(0);
 			
 			Query messageQuery = mgr.newQuery(Message.class);
 			
-			messageQuery.setFilter("userId == userId");
-			messageQuery.declareParameters("String userId");
+			messageQuery.setFilter("userId == idUser");
+			messageQuery.declareParameters("String idUser");
 			messageQuery.setRange(0, limit);
 
-			queryResult = (List<Message>) messageQuery.execute(userId);
+			queryResult = (List<Message>) messageQuery.execute(idUser);
 
 			// Tight loop for fetching all entities from datastore and accomodate
 			// for lazy fetch.
@@ -226,9 +229,10 @@ public class MessageEndpoint {
 					temp.setFirstName(userFound.getFirstName());
 					temp.setLastName(userFound.getLastName());
 					temp.setUserName(userFound.getUserName());
+					temp.setId(userFound.getId());
 					
 					m.setUser(temp);
-				}
+			}
 				
 		} finally {
 			//mgr.close();

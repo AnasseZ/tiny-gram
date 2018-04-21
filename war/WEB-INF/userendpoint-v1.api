@@ -127,7 +127,7 @@
       }
     },
     "userendpoint.getUserByUserName" : {
-      "path" : "find-by-username/{userName}/",
+      "path" : "find-by-username/{userId}/",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],

@@ -9,6 +9,8 @@ public class IncompleteUser {
 	private String lastName;
 	
 	private String avatar;
+	
+	private String id;
 
 	public String getUserName() {
 		return userName;
@@ -40,6 +42,14 @@ public class IncompleteUser {
 
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }
 

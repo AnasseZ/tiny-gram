@@ -99,13 +99,13 @@ public class UserEndpoint {
 	}
 	
 	@SuppressWarnings({ "unchecked" })
-	@ApiMethod(name = "getUserByUserName", path="find-by-username/{userName}/")
+	@ApiMethod(name = "getUserByUserName", path="find-by-username/{userId}/")
 	public User getUserByUsername(@Named("userName") String userNameInput) {
 		
 		PersistenceManager pm = getPersistenceManager();
 		
 		Query query = pm.newQuery(User.class);
-		query.setFilter("userName == userNameInput");
+		query.setFilter("id == userNameInput");
 		query.declareParameters("String userNameInput");
 		
 		List<User> l = (List<User>) query.execute(userNameInput);
