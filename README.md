@@ -62,8 +62,10 @@ Onglet Search-post, renseigner le hashtag (avec ou sans le #, comme vous le souh
 
 | Followers     |     100         |     1000       |  5000          |
 | :------------ | :-------------: | :------------: | :------------: |
-| Moyenne       |     x      |        x  |       x |
+| Moyenne       |     8939      |        x  |       x |
 | Variance      |    x      |      x  |        x  |
+
+Les temps sont anormalement long depuis que Google cloud platform nous indique que nous avons atteint les quotas des ressources gratuites.
 
 ## Données
 
