@@ -32,6 +32,8 @@ public class DataConstant {
 		contents.add("Ce projet vaut 20/20.");
 		contents.add("Il n'en restera qu'un.");
 		contents.add("Super jeu !");
+		contents.add("Ca scaaaalleeeeee");
+		contents.add("Suny day !");
 		
 		
 		hashtags = new ArrayList<String>();
@@ -43,6 +45,8 @@ public class DataConstant {
 		hashtags.add("#HappyDay");
 		hashtags.add("#Super");
 		hashtags.add("#Oklm");
+		hashtags.add("#miage");
+		hashtags.add("#cloud");
 		
 		firstName = new ArrayList<String>();
 		firstName.add("Julien");

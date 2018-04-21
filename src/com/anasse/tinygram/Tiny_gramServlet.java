@@ -31,10 +31,10 @@ public class Tiny_gramServlet extends HttpServlet {
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		DataConstant dataConstant = new DataConstant();
 		
-		int maxmessage=50;
-		int maxuser=100;
+		int maxmessage=300;
+		int maxuser=4999;
 		
-		for (int i = 0; i < maxmessage; i++) {
+		for (int i = 51; i < maxmessage; i++) {
 			Entity e = new Entity("Message", "m" + i);
 			int indexRandom = r.nextInt(dataConstant.contents.size());
 			e.setProperty("userId", "u"+r.nextInt(maxuser+1));
@@ -68,7 +68,7 @@ public class Tiny_gramServlet extends HttpServlet {
 			
 			ArrayList<String> followers = new ArrayList<String>();
 			
-			for (int j = 0; j < 100; j++) {
+			for (int j = 0; j < 1000; j++) {
 				followers.add("u"+r.nextInt(maxuser+1));
 			}
 			

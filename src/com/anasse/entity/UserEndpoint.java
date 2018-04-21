@@ -99,7 +99,7 @@ public class UserEndpoint {
 	}
 	
 	@SuppressWarnings({ "unchecked" })
-	@ApiMethod(name = "getUser", path="find-by-username/{userName}/")
+	@ApiMethod(name = "getUserByUserName", path="find-by-username/{userName}/")
 	public User getUserByUsername(@Named("userName") String userName) {
 		
 		PersistenceManager pm = getPersistenceManager();
@@ -116,16 +116,19 @@ public class UserEndpoint {
 		return null;
 	}
 	
-	
+	@SuppressWarnings({ })
 	@ApiMethod(name = "followUser", path="follow-user/{userId}")
 	public User followUser(User user, @Named("userId") String userId) {
 		PersistenceManager pm = getPersistenceManager();
 		user.getFollowers().add(userId);
-		pm.makePersistent(user);
-		
+		try {
+			pm.makePersistent(user);
+		} finally {
+			pm.close();
+		}
+
 		return user;
 	}
-	
 
 	/**
 	 * This inserts a new entity into App Engine datastore. If the entity already
