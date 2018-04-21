@@ -31,10 +31,10 @@ public class Tiny_gramServlet extends HttpServlet {
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		DataConstant dataConstant = new DataConstant();
 		
-		int maxmessage=1050;
+		int maxmessage=1550;
 		int maxuser=4999;
 		
-		for (int i = 800; i < maxmessage; i++) {
+		for (int i = 1300; i < maxmessage; i++) {
 			Entity e = new Entity("Message", "m" + i);
 			int indexRandom = r.nextInt(dataConstant.contents.size());
 			e.setProperty("userId", "u"+r.nextInt(maxuser+1));

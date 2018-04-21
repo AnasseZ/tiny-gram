@@ -110,31 +110,6 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "messageendpoint.getMessagesByUsername" : {
-      "path" : "get-messages-by/{username}/{limit}",
-      "httpMethod" : "GET",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.anasse.entity.MessageEndpoint.getMessagesByUsername",
-      "request" : {
-        "parameters" : {
-          "username" : {
-            "type" : "string",
-            "required" : true
-          },
-          "limit" : {
-            "type" : "int32",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "messageendpoint.updateMessage" : {
       "path" : "message",
       "httpMethod" : "PUT",
@@ -162,6 +137,31 @@
       "request" : {
         "parameters" : {
           "user" : {
+            "type" : "string",
+            "required" : true
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "messageendpoint.getMessagesById" : {
+      "path" : "get-messages-by/{userId}/{limit}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.anasse.entity.MessageEndpoint.getMessagesById",
+      "request" : {
+        "parameters" : {
+          "userId" : {
             "type" : "string",
             "required" : true
           },
@@ -348,11 +348,6 @@
           "$ref" : "MessageCollection"
         }
       },
-      "com.anasse.entity.MessageEndpoint.getMessagesByUsername" : {
-        "response" : {
-          "$ref" : "MessageCollection"
-        }
-      },
       "com.anasse.entity.MessageEndpoint.updateMessage" : {
         "request" : {
           "$ref" : "Message"
@@ -362,6 +357,11 @@
         }
       },
       "com.anasse.entity.MessageEndpoint.getTimeLine" : {
+        "response" : {
+          "$ref" : "MessageCollection"
+        }
+      },
+      "com.anasse.entity.MessageEndpoint.getMessagesById" : {
         "response" : {
           "$ref" : "MessageCollection"
         }

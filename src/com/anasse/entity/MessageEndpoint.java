@@ -190,9 +190,9 @@ public class MessageEndpoint {
 	}
 	
 	@SuppressWarnings({ "unchecked"})
-	@ApiMethod(name="getMessagesByUsername", path="get-messages-by/{username}/{limit}")
-	public List<Message> getMessagesByUsername(
-			@Named("username") String username,
+	@ApiMethod(name="getMessagesById", path="get-messages-by/{userId}/{limit}")
+	public List<Message> getMessagesById(
+			@Named("userId") String userId,
 			@Named("limit") Integer limit
 			) throws NotFoundException
 	{
@@ -203,21 +203,20 @@ public class MessageEndpoint {
 			mgr = getPersistenceManager();
 	
 			Query query = mgr.newQuery(User.class);
-			query.setFilter("userName == username");
-			query.declareParameters("String username");
+			query.setFilter("id == userId");
+			query.declareParameters("String userId");
 			query.setRange(0, 1);
 			
-			List<User> usersFound = (List<User>) query.execute(username);
+			List<User> usersFound = (List<User>) query.execute(userId);
 			User userFound = usersFound.get(0);
 			
 			Query messageQuery = mgr.newQuery(Message.class);
 			
-			String userFoundId = userFound.getId();
-			messageQuery.setFilter("userId == userFoundId");
-			messageQuery.declareParameters("String userFoundId");
+			messageQuery.setFilter("userId == userId");
+			messageQuery.declareParameters("String userId");
 			messageQuery.setRange(0, limit);
 
-			queryResult = (List<Message>) messageQuery.execute(userFoundId);
+			queryResult = (List<Message>) messageQuery.execute(userId);
 
 			// Tight loop for fetching all entities from datastore and accomodate
 			// for lazy fetch.
